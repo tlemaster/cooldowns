@@ -2,6 +2,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    hirez_api_id: 1947
+    hirez_api_key: '525BFDBFB05744019F532DAFA54E9A2E'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +28,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Provider\ApiProvider:
+        arguments:
+            $apiId: '%hirez_api_id%'
+            $apiKey: '%hirez_api_key%'
+            $apiClient: '@csa_guzzle.client.hirez_smite_pc_api'

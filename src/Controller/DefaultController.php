@@ -8,17 +8,22 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Provider\ApiProvider;
 
 
 /**
  * @package App\Controller
  * @author  Todd LeMaster <tlemaste@nerdery.com>
  */
-class DefaultController
+class DefaultController extends Controller
 {
-    public function index()
+    public function index(ApiProvider $apiProvider)
     {
-        return new Response('Testing: This is the home page for now');
+        $responseData = $apiProvider->requestEndpoint('getgods', [1]);
+
+        return new JsonResponse($responseData);
     }
 }
