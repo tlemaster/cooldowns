@@ -244,7 +244,7 @@ apache:
             ssl_cipher: ''
             directories:
                 avd_3f0u3cyz67d7:
-                    path: /var/www
+                    path: /var/www/public
                     directoryindex: 'index.php app.dev'
                     options:
                         - Indexes
