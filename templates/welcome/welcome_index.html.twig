@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {# TODO: remove debug dump #}
+    {{ dump(gods) }}
+
+    <div id="content-head">
+        <h2>Homepage</h2>
+    </div>
+    <div id="content-main">
+
+        {% for god in gods %}
+            <div id="god-card">
+                <p> {{ god.Name }}</p>
+                <img src="{{ god.godIcon_URL }}">
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

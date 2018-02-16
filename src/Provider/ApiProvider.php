@@ -8,6 +8,7 @@
 
 namespace App\Provider;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
@@ -73,6 +74,8 @@ class ApiProvider
 
     /**
      * @return $this
+     *
+     * @throws Exception
      */
     public function setSession()
     {
@@ -89,6 +92,8 @@ class ApiProvider
 
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     public function testSession()
     {
@@ -148,11 +153,13 @@ class ApiProvider
      * @param \GuzzleHttp\Psr7\Response $response
      *
      * @return \GuzzleHttp\Psr7\Stream
+     *
+     * @throws \Exception
      */
     public function validateResponse(Response $response)
     {
         if (!$response || $response->getStatusCode() != 200) {
-            //ToDo: throw exception here.
+            throw new Exception('HiRez API returned non 200 status code');
         }
 
         return $response->getBody();

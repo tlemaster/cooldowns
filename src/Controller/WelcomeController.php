@@ -19,7 +19,7 @@ use App\Provider\ApiProvider;
  * @package App\Controller
  * @author  Todd LeMaster <tlemaste@nerdery.com>
  */
-class DefaultController extends Controller
+class WelcomeController extends Controller
 {
 
     /**
@@ -33,18 +33,9 @@ class DefaultController extends Controller
     {
         $responseData = $apiProvider->requestEndpoint('getgods', [1]);
 
-        return new JsonResponse($responseData);
-    }
-
-    /**
-     * @Route("/please-work", name="test_page")
-     *
-     * @param \App\Provider\ApiProvider $apiProvider
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function test(ApiProvider $apiProvider)
-    {
-        return new Response('testing again');
+        return $this->render(
+            'welcome/welcome_index.html.twig',
+            ['gods' => $responseData]
+        );
     }
 }
