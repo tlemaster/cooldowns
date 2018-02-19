@@ -22,13 +22,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UpdateGodsCommand extends Command
 {
-    /** @var \App\Service\DatabaseUpdateManager  */
+    /**
+     * @var DatabaseUpdateManager
+     */
     private $databaseUpdateManager;
 
     /**
      * UpdateGodsCommand constructor.
      *
-     * @param \App\Service\DatabaseUpdateManager $databaseUpdateManager
+     * @param DatabaseUpdateManager $databaseUpdateManager
      */
     public function __construct(DatabaseUpdateManager $databaseUpdateManager)
     {
@@ -47,7 +49,8 @@ class UpdateGodsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(['==== Gods Upadate Started ====']);
+        $output->writeln(['==== Gods Update Started ====']);
+        $results = false;
 
         try {
             $results = $this->databaseUpdateManager->updateGods();
