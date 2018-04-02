@@ -39,6 +39,9 @@ class UpdateGodsCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function configure()
     {
         $this
@@ -47,6 +50,11 @@ class UpdateGodsCommand extends Command
             ->setHelp('Command to update our database God data from HiRez API');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(['==== Gods Update Started ====']);
@@ -58,8 +66,22 @@ class UpdateGodsCommand extends Command
             $output->writeln('Gods Update failed error:' . $exception->getMessage());
         }
 
-        $output->writeln($results);
+        $this->outputResults($results, $output);
 
         $output->writeln(['==== Gods Update completed ====']);
+    }
+
+    public function outputResults(array $results, OutputInterface $output)
+    {
+        foreach ($results as $result) {
+           if (is_array($result)) {
+               foreach ($result as $detailedResult) {
+                   $output->writeln($detailedResult);
+               }
+               continue;
+           };
+
+           $output->writeln($result);
+        }
     }
 }

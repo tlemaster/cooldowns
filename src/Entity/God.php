@@ -28,24 +28,24 @@ class God
      *
      * @var string
      */
-    protected $name;
+    public $name;
 
     /**
-     * @ORM\Column(name="attackSpeed", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="attackSpeed", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
-    protected $attackSpeed;
+    public $attackSpeed;
 
     /**
-     * @ORM\Column(name="attackSpeedPerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="attackSpeedPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
     protected $attackSpeedPerLevel;
 
     /**
-     * @ORM\Column(name="hp5PerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="hp5PerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -73,7 +73,7 @@ class God
     protected $healthPerLevel;
 
     /**
-     * @ORM\Column(name="mp5PerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="mp5PerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -87,7 +87,7 @@ class God
     protected $magicProtection;
 
     /**
-     * @ORM\Column(name="magicProtectionPerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="magicProtectionPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -101,7 +101,7 @@ class God
     protected $magicalPower;
 
     /**
-     * @ORM\Column(name="magicalPowerPerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="magicalPowerPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -115,7 +115,7 @@ class God
     protected $mana;
 
     /**
-     * @ORM\Column(name="manaPerFive", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="manaPerFive", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -136,7 +136,7 @@ class God
     protected $physicalPower;
 
     /**
-     * @ORM\Column(name="physicalPowerPerLevel", type="decimal", precision=16, scale=2, nullable=true)
+     * @ORM\Column(name="physicalPowerPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -219,363 +219,291 @@ class God
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAttackSpeed()
+    public function getAttackSpeed(): float
     {
         return $this->attackSpeed;
     }
 
     /**
-     * @param int $attackSpeed
-     *
-     * @return $this
+     * @param float $attackSpeed
      */
-    public function setAttackSpeed(int $attackSpeed)
+    public function setAttackSpeed(float $attackSpeed): void
     {
         $this->attackSpeed = $attackSpeed;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAttackSpeedPerLevel()
+    public function getAttackSpeedPerLevel(): float
     {
         return $this->attackSpeedPerLevel;
     }
 
     /**
-     * @param int $attackSpeedPerLevel
-     *
-     * @return $this
+     * @param float $attackSpeedPerLevel
      */
-    public function setAttackSpeedPerLevel(int $attackSpeedPerLevel)
+    public function setAttackSpeedPerLevel(float $attackSpeedPerLevel): void
     {
         $this->attackSpeedPerLevel = $attackSpeedPerLevel;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getHp5PerLevel()
+    public function getHp5PerLevel(): float
     {
         return $this->hp5PerLevel;
     }
 
     /**
-     * @param int $hp5PerLevel
-     *
-     * @return $this
+     * @param float $hp5PerLevel
      */
-    public function setHp5PerLevel(int $hp5PerLevel)
+    public function setHp5PerLevel(float $hp5PerLevel): void
     {
         $this->hp5PerLevel = $hp5PerLevel;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getHealth()
+    public function getHealth(): int
     {
         return $this->health;
     }
 
     /**
      * @param int $health
-     *
-     * @return $this
      */
-    public function setHealth(int $health)
+    public function setHealth(int $health): void
     {
         $this->health = $health;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getHealthPerFive()
+    public function getHealthPerFive(): int
     {
         return $this->healthPerFive;
     }
 
     /**
      * @param int $healthPerFive
-     *
-     * @return $this
      */
-    public function setHealthPerFive(int $healthPerFive)
+    public function setHealthPerFive(int $healthPerFive): void
     {
         $this->healthPerFive = $healthPerFive;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getHealthPerLevel()
+    public function getHealthPerLevel(): int
     {
         return $this->healthPerLevel;
     }
 
     /**
      * @param int $healthPerLevel
-     *
-     * @return $this
      */
-    public function setHealthPerLevel(int $healthPerLevel)
+    public function setHealthPerLevel(int $healthPerLevel): void
     {
         $this->healthPerLevel = $healthPerLevel;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMp5PerLevel()
+    public function getMp5PerLevel(): float
     {
         return $this->mp5PerLevel;
     }
 
     /**
-     * @param int $mp5PerLevel
-     *
-     * @return $this
+     * @param float $mp5PerLevel
      */
-    public function setMp5PerLevel(int $mp5PerLevel)
+    public function setMp5PerLevel(float $mp5PerLevel): void
     {
         $this->mp5PerLevel = $mp5PerLevel;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getMagicProtection()
+    public function getMagicProtection(): int
     {
         return $this->magicProtection;
     }
 
     /**
      * @param int $magicProtection
-     *
-     * @return $this
      */
-    public function setMagicProtection(int $magicProtection)
+    public function setMagicProtection(int $magicProtection): void
     {
         $this->magicProtection = $magicProtection;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMagicProtectionPerLevel()
+    public function getMagicProtectionPerLevel(): float
     {
         return $this->magicProtectionPerLevel;
     }
 
     /**
-     * @param int $magicProtectionPerLevel
-     *
-     * @return $this
+     * @param float $magicProtectionPerLevel
      */
-    public function setMagicProtectionPerLevel(int $magicProtectionPerLevel)
+    public function setMagicProtectionPerLevel(float $magicProtectionPerLevel): void
     {
         $this->magicProtectionPerLevel = $magicProtectionPerLevel;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getMagicalPower()
+    public function getMagicalPower(): int
     {
         return $this->magicalPower;
     }
 
     /**
      * @param int $magicalPower
-     *
-     * @return $this
      */
-    public function setMagicalPower(int $magicalPower)
+    public function setMagicalPower(int $magicalPower): void
     {
         $this->magicalPower = $magicalPower;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMagicalPowerPerLevel()
+    public function getMagicalPowerPerLevel(): float
     {
         return $this->magicalPowerPerLevel;
     }
 
     /**
-     * @param int $magicalPowerPerLevel
-     *
-     * @return $this
+     * @param float $magicalPowerPerLevel
      */
-    public function setMagicalPowerPerLevel(int $magicalPowerPerLevel)
+    public function setMagicalPowerPerLevel(float $magicalPowerPerLevel): void
     {
         $this->magicalPowerPerLevel = $magicalPowerPerLevel;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getMana()
+    public function getMana(): int
     {
         return $this->mana;
     }
 
     /**
      * @param int $mana
-     *
-     * @return $this
      */
-    public function setMana(int $mana)
+    public function setMana(int $mana): void
     {
         $this->mana = $mana;
-
-        return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getManaPerFive()
+    public function getManaPerFive(): float
     {
         return $this->manaPerFive;
     }
 
     /**
-     * @param int $manaPerFive
-     *
-     * @return $this
+     * @param float $manaPerFive
      */
-    public function setManaPerFive(int $manaPerFive)
+    public function setManaPerFive(float $manaPerFive): void
     {
         $this->manaPerFive = $manaPerFive;
-
-        return $this;
     }
 
     /**
      * @return string
      */
-    public function getPantheon()
+    public function getPantheon(): string
     {
         return $this->pantheon;
     }
 
     /**
      * @param string $pantheon
-     *
-     * @return $this
      */
-    public function setPantheon(string $pantheon)
+    public function setPantheon(string $pantheon): void
     {
         $this->pantheon = $pantheon;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getPhysicalPower()
+    public function getPhysicalPower(): int
     {
         return $this->physicalPower;
     }
 
     /**
      * @param int $physicalPower
-     *
-     * @return $this
      */
-    public function setPhysicalPower(int $physicalPower)
+    public function setPhysicalPower(int $physicalPower): void
     {
         $this->physicalPower = $physicalPower;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getPhysicalPowerPerLevel()
+    public function getPhysicalPowerPerLevel(): int
     {
         return $this->physicalPowerPerLevel;
     }
 
     /**
      * @param int $physicalPowerPerLevel
-     *
-     * @return $this
      */
-    public function setPhysicalPowerPerLevel(int $physicalPowerPerLevel)
+    public function setPhysicalPowerPerLevel(int $physicalPowerPerLevel): void
     {
         $this->physicalPowerPerLevel = $physicalPowerPerLevel;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getPhysicalProtection()
+    public function getPhysicalProtection(): int
     {
         return $this->physicalProtection;
     }
 
     /**
      * @param int $physicalProtection
-     *
-     * @return $this
      */
-    public function setPhysicalProtection(int $physicalProtection)
+    public function setPhysicalProtection(int $physicalProtection): void
     {
         $this->physicalProtection = $physicalProtection;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getPhysicalProtectionPerLevel()
+    public function getPhysicalProtectionPerLevel(): int
     {
         return $this->physicalProtectionPerLevel;
     }
 
     /**
      * @param int $physicalProtectionPerLevel
-     *
-     * @return $this
      */
-    public function setPhysicalProtectionPerLevel(int $physicalProtectionPerLevel)
+    public function setPhysicalProtectionPerLevel(int $physicalProtectionPerLevel): void
     {
         $this->physicalProtectionPerLevel = $physicalProtectionPerLevel;
-
-        return $this;
     }
 
     /**
@@ -588,113 +516,118 @@ class God
 
     /**
      * @param string $roles
-     *
-     * @return $this
      */
-    public function setRoles(string $roles)
+    public function setRoles(string $roles): void
     {
         $this->roles = $roles;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getSpeed()
+    public function getSpeed(): int
     {
         return $this->speed;
     }
 
     /**
      * @param int $speed
-     *
-     * @return $this
      */
-    public function setSpeed(int $speed)
+    public function setSpeed(int $speed): void
     {
         $this->speed = $speed;
-
-        return $this;
     }
 
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
      * @param string $title
-     *
-     * @return $this
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
     /**
      * @param string $type
-     *
-     * @return $this
      */
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 
     /**
      * @return int
      */
-    public function getApiId()
+    public function getApiId(): int
     {
         return $this->apiId;
     }
 
     /**
      * @param int $apiId
-     *
-     * @return $this
      */
-    public function setApiId(int $apiId)
+    public function setApiId(int $apiId): void
     {
         $this->apiId = $apiId;
-
-        return $this;
     }
 
     /**
      * @return string
      */
-    public function getGodCardUrl()
+    public function getGodCardUrl(): string
     {
         return $this->godCardUrl;
     }
 
     /**
      * @param string $godCardUrl
-     *
-     * @return $this
      */
-    public function setGodCardUrl(string $godCardUrl)
+    public function setGodCardUrl(string $godCardUrl): void
     {
         $this->godCardUrl = $godCardUrl;
+    }
 
-        return $this;
+    /**
+     * @param string $propertyName
+     * @return mixed
+     */
+    public function getNamedProperty(string $propertyName)
+    {
+        if (!$this->$propertyName) {
+            return false;
+        }
+
+        return $this->$propertyName;
+    }
+
+    /**
+     * @param string $propertyName
+     * @param $propertyValue
+     * @return bool
+     */
+    public function setNamedProperty(string $propertyName, $propertyValue)
+    {
+        if (!$this->$propertyName) {
+            return false;
+        }
+
+        $this->$propertyName = $propertyValue;
+
+        return $propertyValue;
     }
 }

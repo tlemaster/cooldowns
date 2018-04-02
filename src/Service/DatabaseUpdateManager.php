@@ -13,6 +13,7 @@ use App\Provider\ApiProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
+use stdClass;
 
 /**
  * Service class that updates god db data from HiRezAPI endpoint
@@ -101,7 +102,7 @@ class DatabaseUpdateManager
      *
      * @return string
      */
-    public function createGod($apiGod)
+    public function createGod(stdClass $apiGod)
     {
         $newGod = new God();
 
@@ -142,37 +143,46 @@ class DatabaseUpdateManager
         return "Created New God in Database: " . $newGod->getName();
     }
 
+
     /**
-     * @param $databaseGod
-     * @param $apiGod
-     *
-     * @return string
+     * @param God $databaseGod
+     * @param stdClass $apiGod
+     * @return array
      */
-    public function updateGod($databaseGod, $apiGod)
+    public function updateGod(God $databaseGod, stdClass $apiGod)
     {
-        $this->updateGodAttribute('name', $databaseGod, 'Name', $apiGod);
+        $godProperties = get_object_vars($databaseGod);
+        $updateActions = [];
 
-        return "Updated " . $databaseGod->getName();
-    }
+        foreach ($godProperties as $property => $value) {
+            $apiAttributeValue = $apiGod->{ucwords($property)};
 
-    public function updateGodAttribute($databaseAttribute, $databaseGod, $apiAttribute, $apiGod)
-    {
-        $get = 'get' . $databaseAttribute;
-        $set = 'set' . $databaseAttribute . '(' . $apiGod->{$apiAttribute} . ')';
+            if (!$dbAttributeValue = $databaseGod->getNamedProperty($property)) {
+                continue;
+            }
 
-        if ($databaseGod->{$get} == $apiGod->{$apiAttribute}) {
-            return;
-        } else {
-            $databaseGod->{$set};
+            if ($dbAttributeValue == $apiAttributeValue) {
+                continue;
+            };
+
+            $savedValue = $databaseGod->setNamedProperty($property, $apiAttributeValue);
+
+            if (!$savedValue) {
+                continue;
+            }
+
             $this->entityManager->persist($databaseGod);
+
+            $this->logger->info('Updated ' . $property  . ' field on ' . $databaseGod->getName());
+            $updateActions[] = 'Updated ' . $property . 'field on ' . $databaseGod->getName();
         }
 
-        return true;
+       return $updateActions;
     }
 
+
     /**
-     * @return mixed
-     *
+     * @return array
      * @throws Exception
      */
     public function getAllGodsApiData()
