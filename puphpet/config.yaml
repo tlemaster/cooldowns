@@ -359,9 +359,9 @@ python:
     packages: {  }
     versions: {  }
 nodejs:
-    install: '0'
+    install: '1'
     settings:
-        version: '6'
+        version: '8'
     npm_packages: {  }
 mariadb:
     install: '0'
