@@ -9,6 +9,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\IdentityTrait;
 use App\Entity\Traits\TimeStampTrait;
+use App\Entity\Traits\VariablePropertyTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,25 +23,33 @@ class God
 {
     use IdentityTrait;
     use TimeStampTrait;
+    use VariablePropertyTrait;
 
     /**
      * @ORM\Column(name="name", type="string", length=200)
      *
      * @var string
      */
-    public $name;
+    protected $name;
+
+    /**
+     * @ORM\Column(name="ultimateCooldown", type="string", length=200, nullable=true)
+     *
+     * @var string
+     */
+    protected $ultimateCooldown;
 
     /**
      * @ORM\Column(name="attackSpeed", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
-    public $attackSpeed;
+    protected $attackSpeed;
 
     /**
      * @ORM\Column(name="attackSpeedPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
-     * @var int
+     * @var float
      */
     protected $attackSpeedPerLevel;
 
@@ -122,6 +131,13 @@ class God
     protected $manaPerFive;
 
     /**
+     * @ORM\Column(name="manaPerLevel", type="integer", nullable=true)
+     *
+     * @var int
+     */
+    protected $manaPerLevel;
+
+    /**
      * @ORM\Column(name="pantheon", type="string", nullable=true)
      *
      * @var int
@@ -150,7 +166,7 @@ class God
     protected $physicalProtection;
 
     /**
-     * @ORM\Column(name="physicalProtectionPerLevel", type="integer", nullable=true)
+     * @ORM\Column(name="physicalProtectionPerLevel", type="decimal", precision=16, scale=4, nullable=true)
      *
      * @var int
      */
@@ -216,6 +232,22 @@ class God
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUltimateCooldown()
+    {
+        return $this->ultimateCooldown;
+    }
+
+    /**
+     * @param string $ultimateCooldown
+     */
+    public function setUltimateCooldown(string $ultimateCooldown)
+    {
+        $this->ultimateCooldown = $ultimateCooldown;
     }
 
     /**
@@ -427,6 +459,22 @@ class God
     }
 
     /**
+     * @return int
+     */
+    public function getManaPerLevel(): int
+    {
+        return $this->manaPerLevel;
+    }
+
+    /**
+     * @param int $manaPerLevel
+     */
+    public function setManaPerLevel(int $manaPerLevel): void
+    {
+        $this->manaPerLevel = $manaPerLevel;
+    }
+
+    /**
      * @return string
      */
     public function getPantheon(): string
@@ -459,17 +507,17 @@ class God
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getPhysicalPowerPerLevel(): int
+    public function getPhysicalPowerPerLevel(): float
     {
         return $this->physicalPowerPerLevel;
     }
 
     /**
-     * @param int $physicalPowerPerLevel
+     * @param float $physicalPowerPerLevel
      */
-    public function setPhysicalPowerPerLevel(int $physicalPowerPerLevel): void
+    public function setPhysicalPowerPerLevel(float $physicalPowerPerLevel): void
     {
         $this->physicalPowerPerLevel = $physicalPowerPerLevel;
     }
@@ -491,17 +539,17 @@ class God
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getPhysicalProtectionPerLevel(): int
+    public function getPhysicalProtectionPerLevel(): float
     {
         return $this->physicalProtectionPerLevel;
     }
 
     /**
-     * @param int $physicalProtectionPerLevel
+     * @param float $physicalProtectionPerLevel
      */
-    public function setPhysicalProtectionPerLevel(int $physicalProtectionPerLevel): void
+    public function setPhysicalProtectionPerLevel(float $physicalProtectionPerLevel): void
     {
         $this->physicalProtectionPerLevel = $physicalProtectionPerLevel;
     }
@@ -600,34 +648,5 @@ class God
     public function setGodCardUrl(string $godCardUrl): void
     {
         $this->godCardUrl = $godCardUrl;
-    }
-
-    /**
-     * @param string $propertyName
-     * @return mixed
-     */
-    public function getNamedProperty(string $propertyName)
-    {
-        if (!$this->$propertyName) {
-            return false;
-        }
-
-        return $this->$propertyName;
-    }
-
-    /**
-     * @param string $propertyName
-     * @param $propertyValue
-     * @return bool
-     */
-    public function setNamedProperty(string $propertyName, $propertyValue)
-    {
-        if (!$this->$propertyName) {
-            return false;
-        }
-
-        $this->$propertyName = $propertyValue;
-
-        return $propertyValue;
     }
 }

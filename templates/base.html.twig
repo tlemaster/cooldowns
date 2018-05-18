@@ -2,16 +2,24 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% endblock %}
     </head>
-    <body>
-        <div id="app">
-            {% block body %}{% endblock %}
-        </div>
+    <body class="has-navbar-fixed-top">
+        {% include 'partials/nav_bar.html.twig' %}
+
+        <main class="coold-main">
+            <div id="app" class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
 
         {% block javascripts %}
-            <script src="{{ asset('build/js/app.js') }}"></script>
+            <script src="{{ asset('build/app.js') }}"></script>
+            <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
         {% endblock %}
     </body>
 </html>

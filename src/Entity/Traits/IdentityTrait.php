@@ -1,15 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: todd
- * Date: 2/18/18
+ * File IdentityTrait.php
+ *
+ * @package App\Entity\Traits
+ * @author Todd LeMaster <tlemaste@nerdery.com>
  */
 
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Trait to add orm identifiers to entities
+ */
 trait IdentityTrait
 {
     /**

@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Entity\God;
+use App\Model\ApiGod;
 use App\Provider\ApiProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -37,6 +38,11 @@ class DatabaseUpdateManager
      * @var EntityManagerInterface
      */
     private $entityManager;
+
+    /**
+     * @var array
+     */
+    private $updateActions = [];
 
 
     /**
@@ -73,14 +79,16 @@ class DatabaseUpdateManager
                 continue;
             }
 
+            $apiGodModel = new ApiGod($apiGod);
+
             $existingDatabaseGod = $this->entityManager
                 ->getRepository(God::class)
                 ->findOneBy(['name' => $apiGod->Name]);
 
             if (!$existingDatabaseGod) {
-                $results[] = $this->createGod($apiGod);
+                $results[] = $this->createGod($apiGodModel);
             } else {
-                $results[] = $this->updateGod($existingDatabaseGod, $apiGod);
+                $results[] = $this->updateGod($existingDatabaseGod, $apiGodModel);
             }
         }
 
@@ -102,35 +110,36 @@ class DatabaseUpdateManager
      *
      * @return string
      */
-    public function createGod(stdClass $apiGod)
+    public function createGod(ApiGod $apiGod)
     {
         $newGod = new God();
 
-        $newGod->setName($apiGod->Name);
-        $newGod->setAttackSpeed($apiGod->AttackSpeed);
-        $newGod->setAttackSpeedPerLevel($apiGod->AttackSpeedPerLevel);
-        $newGod->setHp5PerLevel($apiGod->HP5PerLevel);
-        $newGod->setHealth($apiGod->Health);
-        $newGod->setHealthPerFive($apiGod->HealthPerFive);
-        $newGod->setHealthPerLevel($apiGod->HealthPerLevel);
-        $newGod->setMp5PerLevel($apiGod->MP5PerLevel);
-        $newGod->setMagicProtection($apiGod->MagicProtection);
-        $newGod->setMagicProtectionPerLevel($apiGod->MagicProtectionPerLevel);
-        $newGod->setMagicalPower($apiGod->MagicalPower);
-        $newGod->setMagicalPowerPerLevel($apiGod->MagicalPowerPerLevel);
-        $newGod->setMana($apiGod->Mana);
-        $newGod->setManaPerFive($apiGod->ManaPerFive);
-        $newGod->setPantheon($apiGod->Pantheon);
-        $newGod->setPhysicalPower($apiGod->PhysicalPower);
-        $newGod->setPhysicalPowerPerLevel($apiGod->PhysicalPowerPerLevel);
-        $newGod->setPhysicalProtection($apiGod->PhysicalProtection);
-        $newGod->setPhysicalProtectionPerLevel($apiGod->PhysicalProtectionPerLevel);
-        $newGod->setRoles($apiGod->Roles);
-        $newGod->setSpeed($apiGod->Speed);
-        $newGod->setTitle($apiGod->Title);
-        $newGod->setType($apiGod->Type);
-        $newGod->setApiId($apiGod->id);
-        $newGod->setGodCardUrl($apiGod->godIcon_URL);
+        $newGod->setName($apiGod->getName());
+        $newGod->setUltimateCooldown($apiGod->getUltimateCooldown());
+        $newGod->setAttackSpeed($apiGod->getAttackSpeed());
+        $newGod->setAttackSpeedPerLevel($apiGod->getAttackSpeedPerLevel());
+        $newGod->setHp5PerLevel($apiGod->getHp5PerLevel());
+        $newGod->setHealth($apiGod->getHealth());
+        $newGod->setHealthPerFive($apiGod->getHealthPerFive());
+        $newGod->setHealthPerLevel($apiGod->getHealthPerLevel());
+        $newGod->setMp5PerLevel($apiGod->getMp5PerLevel());
+        $newGod->setMagicProtection($apiGod->getMagicProtection());
+        $newGod->setMagicProtectionPerLevel($apiGod->getMagicProtectionPerLevel());
+        $newGod->setMagicalPower($apiGod->getMagicalPower());
+        $newGod->setMagicalPowerPerLevel($apiGod->getMagicalPowerPerLevel());
+        $newGod->setMana($apiGod->getMana());
+        $newGod->setManaPerFive($apiGod->getManaPerFive());
+        $newGod->setPantheon($apiGod->getPantheon());
+        $newGod->setPhysicalPower($apiGod->getPhysicalPower());
+        $newGod->setPhysicalPowerPerLevel($apiGod->getPhysicalPowerPerLevel());
+        $newGod->setPhysicalProtection($apiGod->getPhysicalProtection());
+        $newGod->setPhysicalProtectionPerLevel($apiGod->getPhysicalProtectionPerLevel());
+        $newGod->setRoles($apiGod->getRoles());
+        $newGod->setSpeed($apiGod->getSpeed());
+        $newGod->setTitle($apiGod->getTitle());
+        $newGod->setType($apiGod->getType());
+        $newGod->setApiId($apiGod->getApiId());
+        $newGod->setGodCardUrl($apiGod->getGodCardUrl());
 
         try {
             $this->entityManager->persist($newGod);
@@ -146,38 +155,65 @@ class DatabaseUpdateManager
 
     /**
      * @param God $databaseGod
-     * @param stdClass $apiGod
+     * @param $apiGod $apiGod
      * @return array
      */
-    public function updateGod(God $databaseGod, stdClass $apiGod)
+    public function updateGod(God $databaseGod, ApiGod $apiGod)
     {
-        $godProperties = get_object_vars($databaseGod);
-        $updateActions = [];
+        $this->updateGodField($databaseGod, $apiGod, 'name');
+        $this->updateGodField($databaseGod, $apiGod, 'ultimateCooldown');
+        $this->updateGodField($databaseGod, $apiGod, 'attackSpeed');
+        $this->updateGodField($databaseGod, $apiGod, 'attackSpeedPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'hp5PerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'health');
+        $this->updateGodField($databaseGod, $apiGod, 'healthPerFive');
+        $this->updateGodField($databaseGod, $apiGod, 'healthPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'mp5PerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'magicProtection');
+        $this->updateGodField($databaseGod, $apiGod, 'magicProtectionPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'magicalPower');
+        $this->updateGodField($databaseGod, $apiGod, 'magicalPowerPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'mana');
+        $this->updateGodField($databaseGod, $apiGod, 'manaPerFive');
+        $this->updateGodField($databaseGod, $apiGod, 'pantheon');
+        $this->updateGodField($databaseGod, $apiGod, 'physicalPower');
+        $this->updateGodField($databaseGod, $apiGod, 'physicalPowerPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'physicalProtection');
+        $this->updateGodField($databaseGod, $apiGod, 'physicalProtectionPerLevel');
+        $this->updateGodField($databaseGod, $apiGod, 'roles');
+        $this->updateGodField($databaseGod, $apiGod, 'speed');
+        $this->updateGodField($databaseGod, $apiGod, 'title');
+        $this->updateGodField($databaseGod, $apiGod, 'type');
+        $this->updateGodField($databaseGod, $apiGod, 'apiId');
+        $this->updateGodField($databaseGod, $apiGod, 'godCardUrl');
 
-        foreach ($godProperties as $property => $value) {
-            $apiAttributeValue = $apiGod->{ucwords($property)};
+        return $this->updateActions;
+    }
 
-            if (!$dbAttributeValue = $databaseGod->getNamedProperty($property)) {
-                continue;
-            }
-
-            if ($dbAttributeValue == $apiAttributeValue) {
-                continue;
-            };
-
-            $savedValue = $databaseGod->setNamedProperty($property, $apiAttributeValue);
-
-            if (!$savedValue) {
-                continue;
-            }
-
-            $this->entityManager->persist($databaseGod);
-
-            $this->logger->info('Updated ' . $property  . ' field on ' . $databaseGod->getName());
-            $updateActions[] = 'Updated ' . $property . 'field on ' . $databaseGod->getName();
+    /**
+     * @param God $databaseGod
+     * @param ApiGod $apiGod
+     * @param $property
+     */
+    private function updateGodField(God $databaseGod, ApiGod $apiGod, $property)
+    {
+        if (
+            !($dbGodValue = $databaseGod->get($property)) ||
+            !($apiGodValue = $apiGod->get($property))
+        ) {
+            return;
         }
 
-       return $updateActions;
+        if ($apiGodValue == $dbGodValue) {
+            return;
+        }
+
+        $databaseGod->set($property, $apiGodValue);
+
+        $this->entityManager->persist($databaseGod);
+
+        $this->logger->info('Updated ' . $property  . ' field on ' . $databaseGod->getName());
+        $this->updateActions[] = 'Updated ' . $property . ' field on ' . $databaseGod->getName();
     }
 
 
@@ -191,6 +227,21 @@ class DatabaseUpdateManager
 
         if (!$responseData) {
             throw new Exception('GetGods API endpoint error');
+        }
+
+        return $responseData;
+    }
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
+    public function getAllItemsApiData()
+    {
+        $responseData = $this->apiProvider->requestEndpoint('getitems', [1]);
+
+        if (!$responseData) {
+            throw new Exception('GetItems API endpoint error');
         }
 
         return $responseData;

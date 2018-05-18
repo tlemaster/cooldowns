@@ -1,0 +1,26 @@
+/* Cooldowns customizations */
+
+body.has-navbar-fixed-top {
+  padding-top: 5.25rem !important;
+}
+
+.coold-main {
+  padding: 0 3rem;
+}
+
+.coold-page-title {
+  border-bottom: 2px solid #f5f5f5;
+  margin: 1.75rem 0;
+  padding-bottom: 1.75rem;
+}
+
+.coold-god-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.coold-god-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+}
+

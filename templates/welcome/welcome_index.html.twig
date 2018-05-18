@@ -1,12 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'partials/page_title.html.twig' with { 'title' : 'Dashboard'} %}
 
-    <div id="content-head">
-        <h2>Homepage</h2>
-    </div>
-    <div id="content-main">
-        <example></example>
-    </div>
+    {% for god in gods %}
+       {#{% if god.Name == 'Tyr' %}#}
+            {#{{ dump(god) }}#}
+       {#{% endif %}#}
+        {{ dump(god) }}
+    {% endfor %}
 
+    <div class="columns">
+
+        <div class="column is-8">
+            <div class="box">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image">
+                            <img src="https://web2.hirez.com/smite/god-icons/ah-muzen-cab.jpg">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="columns">
+                            <div class="column">
+                                <p class="coold-god-subtitle">Relic One</p>
+                                <p>Timer</p>
+                            </div>
+                            <div class="column">
+                                <p class>Relic Two</p>
+                                <p>Timer</p>
+                            </div>
+                            <div class="column">
+                                <p>Ultimate</p>
+                                <p>Timer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

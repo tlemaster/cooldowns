@@ -1,17 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: todd
- * Date: 2/18/18
+ * File TimeStampTrait.php
+ *
+ * @package App\Entity\Traits
+ * @author Todd LeMaster <tlemaste@nerdery.com>
  */
 
 namespace App\Entity\Traits;
 
 use DateTime;
-use Doctrine\DBAL\Types\VarDateTimeType;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Trait to add Created and Updated timestamps to entities
+ */
 trait TimeStampTrait
 {
     /**
